@@ -153,5 +153,132 @@ class _FetchUserProviderElement
   @override
   String get input => (origin as FetchUserProvider).input;
 }
+
+String _$userLoginHash() => r'15131c6ebd2bd458b32a714b330b16dfdea500bf';
+
+/// See also [userLogin].
+@ProviderFor(userLogin)
+const userLoginProvider = UserLoginFamily();
+
+/// See also [userLogin].
+class UserLoginFamily extends Family<AsyncValue> {
+  /// See also [userLogin].
+  const UserLoginFamily();
+
+  /// See also [userLogin].
+  UserLoginProvider call(
+    LoginModel loginModel,
+  ) {
+    return UserLoginProvider(
+      loginModel,
+    );
+  }
+
+  @override
+  UserLoginProvider getProviderOverride(
+    covariant UserLoginProvider provider,
+  ) {
+    return call(
+      provider.loginModel,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'userLoginProvider';
+}
+
+/// See also [userLogin].
+class UserLoginProvider extends AutoDisposeFutureProvider<Object?> {
+  /// See also [userLogin].
+  UserLoginProvider(
+    LoginModel loginModel,
+  ) : this._internal(
+          (ref) => userLogin(
+            ref as UserLoginRef,
+            loginModel,
+          ),
+          from: userLoginProvider,
+          name: r'userLoginProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$userLoginHash,
+          dependencies: UserLoginFamily._dependencies,
+          allTransitiveDependencies: UserLoginFamily._allTransitiveDependencies,
+          loginModel: loginModel,
+        );
+
+  UserLoginProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.loginModel,
+  }) : super.internal();
+
+  final LoginModel loginModel;
+
+  @override
+  Override overrideWith(
+    FutureOr<Object?> Function(UserLoginRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: UserLoginProvider._internal(
+        (ref) => create(ref as UserLoginRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        loginModel: loginModel,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Object?> createElement() {
+    return _UserLoginProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UserLoginProvider && other.loginModel == loginModel;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, loginModel.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin UserLoginRef on AutoDisposeFutureProviderRef<Object?> {
+  /// The parameter `loginModel` of this provider.
+  LoginModel get loginModel;
+}
+
+class _UserLoginProviderElement
+    extends AutoDisposeFutureProviderElement<Object?> with UserLoginRef {
+  _UserLoginProviderElement(super.provider);
+
+  @override
+  LoginModel get loginModel => (origin as UserLoginProvider).loginModel;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
