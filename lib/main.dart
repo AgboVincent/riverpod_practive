@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final counterProvider = StateProvider((ref) => 0);
+//final counterProvider = StateProvider((ref) => 0);
 final userProvider = StateNotifierProvider<UserNotifier, User>(
   (ref) => UserNotifier(const User(name: '', age: "0", )));
 
@@ -54,3 +54,43 @@ Future userLogin (UserLoginRef ref, LoginModel loginModel){
   final userLogin = ref.watch(loginApiProvider);
   return userLogin.userLogin(loginModel);
 }
+
+
+class Counter extends StateNotifier<int?> {
+  Counter(): super(null);
+  void increment() => state = state == null ? 1 : state! + 1;
+  int? get value => state;
+}
+
+final counterProvider = StateNotifierProvider<Counter, int?>((ref) => Counter());
+
+
+//eg2
+enum City{
+  stockholm,
+  paris,
+  tokyo,
+}
+
+typedef WeatherEmoji = String;
+
+Future<WeatherEmoji> getWeather (City city){
+  return Future.delayed(const Duration(seconds: 1), 
+  ( ) => {
+    City.stockholm: 'cloudy',
+    City.paris: 'sunny',
+    City.tokyo: 'raininy'
+  }[city]!);
+}
+
+final currentCityProvider = StateProvider<City?>((ref) => null);
+
+final weatherProvider = FutureProvider<WeatherEmoji>((ref){
+   final city = ref.watch(currentCityProvider);
+   if(city != null){
+     return getWeather(city);
+   }
+   else {
+    return 'unkown';
+   }
+});
